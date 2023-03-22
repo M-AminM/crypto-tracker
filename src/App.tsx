@@ -8,6 +8,9 @@ import {
 } from "./store";
 import { useObservableState } from "observable-hooks";
 import "./style.scss";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import HomePage from "./pages/Home";
 
 const Deck = () => {
   const deck = useObservableState(deck$, []);
@@ -77,10 +80,17 @@ const App: React.FunctionComponent = () => {
   // pokemon$.subscribe((x) => console.log(x));
   // pokemonWithPower$.subscribe((x) => console.log(x));
   return (
-    <div className="App" style={{ display: "flex" }}>
-      <Search />
+    <div>
+      {/* <Search />
       <Deck />
-      <div className="karim">Heloo</div>
+      <div className="karim">Heloo</div> */}
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          {/* <Route /> */}
+        </Route>
+      </Routes>
     </div>
   );
 };
