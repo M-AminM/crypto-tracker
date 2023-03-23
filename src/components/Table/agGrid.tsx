@@ -123,7 +123,7 @@ const AgGrid: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <>
+    <div className="table">
       <input
         type="text"
         className="table__search"
@@ -151,7 +151,7 @@ const AgGrid: React.FunctionComponent = () => {
           rowHeight={70}
         />
       </div>
-    </>
+    </div>
   );
 };
 export default AgGrid;

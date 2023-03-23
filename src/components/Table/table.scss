@@ -1,4 +1,6 @@
 .table {
+  padding: 0.5rem 4rem;
+
   &__col {
     display: flex;
     align-items: center;
@@ -22,6 +24,16 @@
     border: 1px solid gray;
     border-radius: 2rem;
     color: white;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .table {
+    padding: 0.5rem 1.5rem;
+
+    &__search {
+      width: 90%;
+    }
   }
 }
 

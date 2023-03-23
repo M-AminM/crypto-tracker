@@ -1,11 +1,7 @@
 import React from "react";
 
 const Footer: React.FunctionComponent = () => {
-  return (
-    <div>
-      <h5>Footer</h5>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Footer;
