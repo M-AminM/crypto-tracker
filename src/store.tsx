@@ -1,40 +1,28 @@
 import { BehaviorSubject, map, combineLatestWith } from "rxjs";
+import axios from "axios";
+import { CoinList } from "./components/Config/api";
 
-export interface Pokemon {
+export interface Crypto {
   id: number;
   name: string;
   image: string;
-  power?: string;
-  selected?: boolean;
+  ath_change_percentag: number;
+  current_price: number;
+  market_cap: number;
+  market_cap_change_24h: number;
+  market_cap_change_percentage_24h: number;
+  market_cap_rank: number;
+  price_change_24h: number;
+  price_change_percentage_24h: number;
+  symbol: string;
+  total_supply: number;
+  total_volume: number;
 }
 
-export const rawPokemon$ = new BehaviorSubject<Pokemon[]>([]);
+export const rawCrypto$ = new BehaviorSubject<Crypto[]>([]);
 
-export const pokemonWithPower$ = rawPokemon$.pipe(
-  map((pokemon) =>
-    pokemon.map((p) => ({
-      ...p,
-      power: p.id + p.name,
-    }))
-  )
+export const filterCrypto$ = rawCrypto$.pipe(
+  map((pokemon) => pokemon.filter((p) => p.name))
 );
 
-export const selected$ = new BehaviorSubject<number[]>([]);
-
-export const pokemon$ = pokemonWithPower$.pipe(
-  combineLatestWith(selected$),
-  map(([pokemon, selected]) =>
-    pokemon.map((p) => ({
-      ...p,
-      selected: selected.includes(p.id),
-    }))
-  )
-);
-
-export const deck$ = pokemon$.pipe(
-  map((pokemon) => pokemon.filter((p) => p.selected))
-);
-
-fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json")
-  .then((res) => res.json())
-  .then((data) => rawPokemon$.next(data));
+axios.get(CoinList()).then((res) => rawCrypto$.next(res.data));
