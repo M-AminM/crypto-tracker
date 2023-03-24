@@ -18,23 +18,27 @@ const Coins: React.FunctionComponent = () => {
 
   console.log(coinData);
   if (Object.keys(coinData).length === 0) {
-    return <div>Loading ...</div>;
+    return <p className="loading">Loading ...</p>;
   }
 
+  const regex = /(<([^>]+)>)/gi;
+  const result = coinData.description?.en.split(". ")[0].replace(regex, "");
   return (
     <div className="coins">
-      <div>
-        <img src={coinData.image?.large} alt={coinData.name} />
-        <h1>{coinData.name}</h1>
-        <p>{coinData.description?.en.split(". ")[0]}</p>
-        <h3>
-          Rank: <span>{coinData.coingecko_rank}</span>{" "}
-        </h3>
-        <h3>
-          Current Price:{" "}
-          <span>{coinData?.market_data?.current_price["usd"]}</span>{" "}
-        </h3>
-      </div>
+      <img
+        className="coins__icon"
+        src={coinData.image?.large}
+        alt={coinData.name}
+      />
+      <h1>{coinData.name}</h1>
+      <p>{result}</p>
+      <h3>
+        Rank: <span>{coinData.coingecko_rank}</span>{" "}
+      </h3>
+      <h3>
+        Current Price:{" "}
+        <span>{coinData?.market_data?.current_price["usd"]}</span>{" "}
+      </h3>
     </div>
   );
 };

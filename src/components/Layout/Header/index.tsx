@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./header.scss";
 
 const Header: React.FunctionComponent = () => {
   return (
     <header className="header">
-      <h1 className="header__title">Crypto Hunter</h1>
+      <Link className="header__title" to="/">
+        Crypto Hunter
+      </Link>
       <button className="header__login">LOGIN</button>
     </header>
   );
