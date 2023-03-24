@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { AgGridReact } from "ag-grid-react";
 import {
   ColDef,
@@ -9,12 +15,14 @@ import {
 import "ag-grid-enterprise";
 import { filterCrypto$ } from "../../store";
 import "./table.scss";
+import { useNavigate } from "react-router-dom";
 
 const AgGrid: React.FunctionComponent = () => {
   const [search, setSearch] = useState("");
   const [crypto, setCrypto] = useState<Crypto[]>([]);
   const [gridApi, setGridApi] = useState<any>(null);
   const gridRef = useRef<AgGridReact>(null);
+  const navigate = useNavigate();
   const perpage = 5;
 
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
@@ -122,6 +130,11 @@ const AgGrid: React.FunctionComponent = () => {
     };
   }, []);
 
+  const onSelectionChanged = useCallback(() => {
+    const selectedRows = gridRef.current!.api.getSelectedRows();
+    navigate(`/coins/${selectedRows[0].id}`);
+  }, []);
+
   return (
     <div className="table">
       <input
@@ -149,6 +162,7 @@ const AgGrid: React.FunctionComponent = () => {
           animateRows={true}
           editType={"fullRow"}
           rowHeight={70}
+          onSelectionChanged={onSelectionChanged}
         />
       </div>
     </div>

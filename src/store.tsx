@@ -26,3 +26,5 @@ export const filterCrypto$ = rawCrypto$.pipe(
 );
 
 axios.get(CoinList()).then((res) => rawCrypto$.next(res.data));
+
+export const signleCoin$ = new BehaviorSubject<Crypto[]>([]);
